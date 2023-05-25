@@ -1,16 +1,35 @@
 import Pagina from '@/components/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect, useState, } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { set, useForm } from 'react-hook-form'
 
 const index = () => {
-  const { push } = useRouter()
-  const { register, handleSubmit } = useForm()
+  const { push, query } = useRouter()
+  const { register, handleSubmit, setValue } = useForm()
+
+  useEffect(() => {
+    if (query.id) {
+      const id = query.id
+      const cursos = JSON.parse(window.localStorage.getItem('cursos'))
+      const curso = cursos[id]
+      setValue('nome', curso.nome)
+      setValue('duracao', curso.duracao)
+      setValue('modalidade', curso.modalidade)
+      for(let atributo in curso){
+        setValue(atributo, curso[atributo])
+      }
+    }
+  }, [query.id])
+
+
+
+
+
   function salvar(dados) {
     const cursos = JSON.parse(window.localStorage.getItem('cursos')) || []
-    cursos.push(dados)
+    cursos.splice(query.id, 1, dados)
     window.localStorage.setItem('cursos', JSON.stringify(cursos))
     push('/cursos')
   }
