@@ -15,7 +15,7 @@ const Cabecalho = () => {
           <Navbar.Brand href="/">Academico</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/cursos">Cursos</Nav.Link>
-            <Nav.Link href="#features">Disciplinas</Nav.Link>
+            <Nav.Link href="/disciplinas">Disciplinas</Nav.Link>
             <Nav.Link href="#pricing">Alunos</Nav.Link>
             <Nav.Link href="#pricing">Turmas</Nav.Link>
             <Nav.Link href="#pricing">Salas</Nav.Link>
