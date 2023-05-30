@@ -1,4 +1,5 @@
 import Pagina from '@/components/Pagina'
+import axios from 'axios'
 import Link from 'next/link'
 import React, { useState, useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
@@ -10,8 +11,23 @@ const index = () => {
     const [disciplinas, setDisciplinas] = useState([])
 
     useEffect(() => {
-        
+        axios.get('/api/disciplinas').then(resultado =>{
+            setDisciplinas(resultado.data);
+            getAll()
+        })
     }, [])
+    function getAll(){
+        axios.get('/api/disciplinas').then(resultado =>{
+            setDisciplinas(resultado.data);
+        })
+
+    }
+
+
+    function excluir(id){
+        axios.delete('/api/disciplinas/' + id)
+        getAll()
+    }
 
     return (
         <Pagina titulo="Disciplinas">
@@ -23,21 +39,21 @@ const index = () => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Nome</th>
+                        <th>Curso</th>
                         <th>Duração</th>
                         <th>Modalidade</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {disciplinas.map((item, i) => (
-                        <tr key={i}>
+                    {disciplinas.map(item => (
+                        <tr key={item.id}>
                             <td>
-                                <Link href={'/disciplinas/' + i}>
+                                <Link href={'/disciplinas/' + item.id}>
                                     <BsPencilFill title="Alterar" className='text-primary' />
                                 </Link>
                                 {' '}
-                                <BsFillTrash3Fill title="Excluir" onClick={() => excluir(i)} className='text-danger' />
+                                <BsFillTrash3Fill title="Excluir" onClick={() => excluir(item.id)} className='text-danger' />
                             </td>
                             <td>{item.nome}</td>
                             <td>{item.duracao}</td>

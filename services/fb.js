@@ -19,5 +19,11 @@ try {
     app = initializeApp(firebaseConfig);
 }
 
+
+
+
+
+
+
 const db = getDatabase(app)
 export { db, set, ref }
